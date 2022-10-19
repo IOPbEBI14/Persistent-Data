@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_pet_shop/src/domain/categories_provider.dart';
+import '../settings/settings_view.dart';
 import '../views/sub_categories_list.dart';
 import 'bottom_sheet_category.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// Displays a list of SampleItems.
 class MainWindowView extends ConsumerWidget {
@@ -13,10 +15,14 @@ class MainWindowView extends ConsumerWidget {
 
   static const routeName = '/';
 
+  Future<void> checkPermission() async {
+    var result = await Permission.storage.request();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoriesList = ref.watch(myCategoriesListProvider);
-
+    checkPermission();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -25,7 +31,18 @@ class MainWindowView extends ConsumerWidget {
           'Мой зоомагазин',
           textAlign: TextAlign.center,
         ),
-      ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              // Navigate to the settings page. If the user leaves and returns
+              // to the app after it has been killed while running in the
+              // background, the navigation stack is restored.
+              Navigator.restorablePushNamed(context, SettingsView.routeName);
+            },
+          ),
+        ],),
+
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => showMaterialModalBottomSheet(
@@ -38,13 +55,8 @@ class MainWindowView extends ConsumerWidget {
         ),
       ),
 
-      // To work with lists that may contain a large number of items, it’s best
-      // to use the ListView.builder constructor.
-      //
-      // In contrast to the default ListView constructor, which requires
-      // building all Widgets up front, the ListView.builder constructor lazily
-      // builds Widgets as they’re scrolled into view.
-      body: GridView.count(
+      body: // categoriesList.when
+      GridView.count(
         crossAxisCount: 2,
         crossAxisSpacing: 1,
         mainAxisSpacing: 0,
@@ -90,25 +102,6 @@ class MainWindowView extends ConsumerWidget {
                 ))
             .toList(),
       ),
-
-      //   //   ListTile(
-      //     //   title: Text('SampleItem ${item.id}'),
-      //     //   leading: const CircleAvatar(
-      //     //     // Display the Flutter Logo image asset.
-      //     //     foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-      //     //   ),
-      //     //   onTap: () {
-      //     //     // Navigate to the details page. If the user leaves and returns to
-      //     //     // the app after it has been killed while running in the
-      //     //     // background, the navigation stack is restored.
-      //     //     Navigator.restorablePushNamed(
-      //     //       context,
-      //     //       SampleItemDetailsView.routeName,
-      //     //     );
-      //     //   }
-      //     // );
-      //   },
-      // ),
     );
   }
 }

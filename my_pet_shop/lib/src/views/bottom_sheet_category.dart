@@ -60,18 +60,15 @@ Widget toggleBottomSheetCategory(BuildContext context, WidgetRef ref) {
                       )),
                     ),
                     child: const Text('          ADD          '),
-                    onPressed: () {
+                    onPressed: () async {
                       if (catsList.length != 8) {
                         String pictureName = '';
                         final String url = pictureUrlController.text;
                         PictureLoader loader = PictureLoader();
-                        Future<bool> isPicture = loader.checkPicture(url);
                         try {
-                          isPicture.then((value) => loader
+                          await loader
                               .loadPicture(url)
-                              .then((fileName) => pictureName = fileName));
-
-                          // Focus.of(context).unfocus();
+                              .then((fileName) => pictureName = fileName);
                           ref
                               .read<MyCategoriesList>(
                                   myCategoriesListProvider.notifier)

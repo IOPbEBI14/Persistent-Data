@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:my_pet_shop/src/models/category_item.dart';
+import 'package:my_pet_shop/src/settings/settings_controller.dart';
+import 'package:my_pet_shop/src/settings/settings_view.dart';
 import 'package:my_pet_shop/src/views/goods_list.dart';
 import 'package:my_pet_shop/src/views/theme.dart';
 
@@ -11,8 +13,9 @@ import 'views/main_window_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
+  final SettingsController settingsController;
   const MyApp({
-    Key? key,
+    Key? key, required this.settingsController,
   }) : super(key: key);
 
   @override
@@ -57,6 +60,9 @@ class MyApp extends StatelessWidget {
                     subCategory: item,
                   );
                 }
+              case SettingsView.routeName:
+                return SettingsView(controller: settingsController);
+
               case MainWindowView.routeName:
               default:
                 return const MainWindowView();

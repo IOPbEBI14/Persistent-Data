@@ -32,7 +32,7 @@ class PictureLoader {
       File file = File('${pictureDir.path}/$filename');
       var raf = file.openSync(mode: FileMode.write);
       // response.data is List<int> type
-      raf.writeFromSync(response.data);
+      file.writeAsBytes(response.data);
       await raf.close();
 
       return '${pictureDir.path}/$filename';
