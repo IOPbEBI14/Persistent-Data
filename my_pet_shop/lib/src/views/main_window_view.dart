@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_pet_shop/src/domain/categories_provider.dart';
-import '../settings/settings_view.dart';
+import '../settings/clients_view.dart';
 import '../views/sub_categories_list.dart';
 import 'bottom_sheet_category.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -38,11 +38,11 @@ class MainWindowView extends ConsumerWidget {
               // Navigate to the settings page. If the user leaves and returns
               // to the app after it has been killed while running in the
               // background, the navigation stack is restored.
-              Navigator.restorablePushNamed(context, SettingsView.routeName);
+              Navigator.restorablePushNamed(context, ClientsView.routeName);
             },
           ),
-        ],),
-
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => showMaterialModalBottomSheet(
@@ -54,9 +54,8 @@ class MainWindowView extends ConsumerWidget {
           },
         ),
       ),
-
       body: // categoriesList.when
-      GridView.count(
+          GridView.count(
         crossAxisCount: 2,
         crossAxisSpacing: 1,
         mainAxisSpacing: 0,

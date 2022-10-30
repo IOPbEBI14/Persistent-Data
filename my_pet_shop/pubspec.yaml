@@ -21,12 +21,18 @@ dependencies:
   flutter_riverpod: ^1.0.4
   equatable: ^2.0.5
   permission_handler: ^9.2.0
+  drift: ^1.0.1
+  sqlite3_flutter_libs: ^0.5.0
+  path: ^1.8.0
+  flutter_secure_storage: ^6.0.0
+  card_input_field: ^1.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^1.1.1
   build_runner: ^2.1.7
+  drift_dev: ^1.0.2
 
   flutter_lints: ^2.0.0
 
